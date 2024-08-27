@@ -68,7 +68,7 @@ The architecture behind our system is designed to provide an interactive and use
 For the process to be initiated, the user is required to import a dataset into the Python module, through the Graphical User Interface we have created. The Python module serves as the core engine, responsible for various tasks such as data preprocessing, model training and generating Counterfactual Explanations. It leverages popular libraries like pandas, numpy, Scikit-learn, as well as seaborn and matplotlib for visualization purposes. The rest of the steps are repeated interactions between the user and the Ui module, which then sends the according inputs to the Python module. The python module then returns the according outputs that are given to the user as explanations for the Machine Learning model trained.
 
 In short, the picture below shows the architecture behind the created system:
-![alt text](<Mind Maps.jpg>)
+![alt text](<resources/Mind Maps.jpg>)
 
 ## Use Case - Adult dataset
 
@@ -80,7 +80,7 @@ In the first demonstration, we will focus on visualizing changes for one of the 
 
 We begin by importing the dataset of our choice while also selecting the target column and the optimization algorithm. After each step, clicking the Blue button below it, is required for the program to load and proceed to the next part. In this example, we have imported the “Adult” dataset for the demonstration process. As seen on the figure below, the dataset has been imported and we have selected both the optimization algorithm and the target column. In this case, we selected the grid Search algorithm, to find the best hyperparameter combination to train our data. We have also specified the target column as the preprocessed "income" column.
 
-![alt text](1stmethod-generated1.png)
+![alt text](resources/1stmethod-generated1.png)
 
 After these steps, some messages as well as a table will be printed on the right side of the screen. These messages explain to the user, that the model was trained according to the inputs given in the previous steps, but some instances were not classified correctly. To be exact, there are 1025 instances that were misclassified. These instances are then printed in the table, accompanied by their features as well as the predicted and actual labels. Above we have mentioned that each one of these rows represent a different person and their data and the classification goal is to predict whether each person makes more or less than 50000 dollars in a year. That means that the printed table contains all people that the model placed in the wrong class. For example, the instance with index 39, has a GroundTruth label 0 but predicted 1. The model predicted that this one person makes <b> more than 50000 dollars in a year </b>, when they actually <b>do not </b>. Our goal now is to find, through Counterfactual Explanations, which hyperparameters should have been used in the training process, for that one instance to have been classified correctly. It is important to note that the optimization algorithm chosen by the user, finds the best hyperparameter combination for the dataset which means the best accuracy. No matter the hyperparameter combination, there will always be misclassified instances, as it is almost impossible to have an accuracy of 100%.
 
@@ -88,7 +88,7 @@ From the printed table of misclassified instances, the user has to select a row 
 
 After the selection of the instance, as explained above, the Counterfactual Explanations are generated for that specific row. As default, the program generates 10 Counterfactual Explanations and has the freedom of changing all five of the hyperparameters to find the best combination. 
 
-![alt text](1stmethod-generated2.png)
+![alt text](resources/1stmethod-generated2.png)
 
 In the figure above, we chose to request for 12 Counterfactuals to be generated and give the program the freedom to change only three of the hyperparameters, n_estimators, min_samlpes_split and criterion. After the generation, we notice that only 8 Counterfactual Explanations are printed in a new table that appears to the right side of the screen. That is the case of the dice-ml dictionary not being able to find as many Counterfactuals as requested from the user, so it returns as many as it can. The Explanations are printed in ascending order depending on their difference to the original hyperparameter combinations used to train the model. This means that the first row of the new table shows the Counterfactual explanation with the least difference from before, that will however produce a different outcome in the classification process. Also, a new column is introduced by the name “BinaryLabel”. This column shows the predicted label of the Counterfactual Explanation.
 
@@ -96,15 +96,15 @@ Below the two choices given to the user, regarding the number of Counterfactuals
 
 By scrolling through the above tables, we meet the spider plot. This plot, also known as a radar plot, depicts visually the difference between factual and Counterfactual, for all hyperparameters as a group. Each arch represents a different hyperparameter and is scaled differently. For hyperparameters that take categorical values, the scaling was made according to the number of values they take and separated equally. In the “Criterion” hyperparameter, G stands for “Gini” while E stands for “Entropy” and in the “Scaler” hyperparameter S, M and R stand for “Standard Scaler”, “MinMax Scaler” and “Robust Scaler” accordingly. On the spider plot, we can see a red line, which represents the factual and a green shape, which represents the Counterfactual explanation the user chose to visualize.
 
-![alt text](1stmethod-generated3.png)
+![alt text](resources/1stmethod-generated3.png)
 
 Below the spider plot is a quick visualization of the change in class, to show to the final user, that the Counterfactual combination of hyperparameters would indeed have changed the class of the selected instance, if the model was trained using them. In this case, the originally predicted class was 1 and it is shown in the red circle, while the new predicted class is 0 and it is shown in the green circle.
 
-![alt text](1stmethod-generated4.png)
+![alt text](resources/1stmethod-generated4.png)
 
 Last but not least, after the change in the class, we depict the changes in each hyperparameter individually. For numerical values, the change is shown in a numerical axis, which takes values depending on each hyperparameter’s minimum and maximum value. On these axes, there is a red line and a green line representing the factual and Counterfactual accordingly, as well as an arrow pointing towards the right direction to make it more clear. For example, we see in the n_estimators hyperparameter, the change from 200 to 2. In the next case of the min_samples_leaf hyperparameter, there was no change and that is why the message “The starting and final numbers in the parameter below are the same” appears before the axis. In the figure below, we can also see the visualization of changes in the rest of the hyperparameters.
 
-![alt text](1stmethod-generated5.png)
+![alt text](resources/1stmethod-generated5.png)
 
 In the min_samples_split hyperparameter the change is again clear from 50 to 18. Finaly, in the case of categorical values, as the criterion and scaler hyperparameters, the axis could not be used. Instead, the values each hyperparameter takes were separated into different boxes. The red colored letters represent the factual while the green background represents the Counterfactual. If a box is both green and contains red letters, it means that the factual and Counterfactual values are the same. In the previous figure, the criterion parameter changed from “Gini” to “Entropy” while the factual and Counterfactual values of the scaler parameter remained the same.
 
@@ -112,7 +112,7 @@ As mentioned in the methodology part, there are three possible outcomes in gener
 
 In both cases of either the proxy model not fitting or Counterfactuals not being found by the program, the process stops after the selection of the misclassified instance and the according message appears, either "Proxy doesn’t fit for {index of misclassified instance}" or "No counterfactuals found for {index of misclassified instance}". Below is an example picture of the proxy not fitting for misclassified isntance number 10:
 
-![alt text](proxy_nof_fit.png)
+![alt text](resources/proxy_nof_fit.png)
 
 <h3> Demonstration 2 - Visualizing aggregated changes for all the Counterfactuals generated </h3>
 
@@ -120,11 +120,11 @@ In this second demonstration, we will present the aggregated changes in all Coun
 
 We begin the process by following the same steps as explained in the previous chapter, in Counterfactual generation. Selecting the dataset to import data from, choosing the optimization algorithm and target column and finally choosing the misclassified instance from which to generate Counterfactual Explanations.
 
-![alt text](aggregeted_1.png)
+![alt text](resources/aggregeted_1.png)
 
 In this case, we have selected misclassified instance number 1354. This instance was selected as it generates Counterfactuals with bigger difference values than the ones chosen before. After selecting the number of Counterfactual Explanations to generate, on the right side of the figure above, appears the table with all Counterfactuals generated. We notice that, indeed, the difference values reach up to 3, which is bigger than the values presented in previous examples.
 
-![alt text](aggregeted_2.png)
+![alt text](resources/aggregeted_2.png)
 
 Proceeding, it is important to	 mention that, as seen on the left side of the figure above, we allowed the program to change all hyperparameters to create combinations with bigger difference value. On the “Select which counterfactual you would like to visualize” choice, after a scroll down, appears the choice “Aggregated”, which will provide us with a group of visual representations of the collective changes made in hyperparameters. For the hyperparameters that take numerical values, the program creates heatmap-like plots. These plots present a matrix from the frequency counts of each unique value, accompanied by shades of the color green to show the frequency of each value. A darker green shade represents a higher frequency, while a lighter shade, a lower frequency. Notably, the sum of all values corresponds to the total number of Counterfactual Explanations generated, which in this case is 7. 
 
@@ -132,13 +132,13 @@ We begin with the visualization of the n_estimators hyperparameter. We notice th
 
 On the other hand, while examining the visual representation of value frequency for the min_samples_leaf parameter, only the value 1 appears, with a frequency of 7. This means that all the Counterfactual Explanations generated used a min_samples_leaf value of 1. The fact that only one value appears suggests that this specific setting was consistently optimal or required across all generated Counterfactuals. It indicates a preference for having at least one sample in each leaf node during the tree splitting process.
 
-![alt text](aggregeted_3.png)
+![alt text](resources/aggregeted_3.png)
 
 Continuing on the next figure , we examine the visualization of the min_samples_split parameter. Notably, the frequency of value 3 appears three times, while both values 4 and 6 occur twice. This indicates a preference for the value 3 within the hyperparameter combinations generated. Hence, it is likely a better fit for the proxy model constructed to address the misclassified instance discussed earlier. The prevalence of 3 implies its effectiveness during hyperparameter tuning, potentially leading to more accurate and consistent predictions. 
 
 After analyzing the visual representations of all numerical hyperparameters, the next examination focuses on those that are categorical. In this case, we created bar plots based on the frequency of each categorical value. The colors of light green and darker green in this case, were used solely for the purpose of visually distinguishing each bar from the others. In the Figure below, we begin with the visualization of the criterion hyperparameter. Notably, the frequency of "Gini" appears 4 times, whereas "Entropy" occurs 3 times. This suggests a preference for the "Gini" criterion within the hyperparameter combinations generated. Consequently, it is likely a more suitable choice for the proxy model developed to address the previously mentioned misclassified instance. The higher frequency of "Gini" implies its effectiveness during hyperparameter tuning, potentially resulting in more accurate and consistent predictions. 
 
-![alt text](aggregeted_4.png)
+![alt text](resources/aggregeted_4.png)
 
 In this last figure, appears the last visualization of our program, regarding the scaler hyperparameter. The frequency analysis reveals "MinMax Scaler" as the predominant choice, appearing 5 times, while both "Standard Scaler" and "Robust Scaler" occur only once each. This distribution underscores a clear preference for "MinMax Scaler" within the generated hyperparameter combinations. Consequently, it suggests that "MinMax Scaler" is a more favorable choice for the proxy model devised to address the previously mentioned misclassified instance. The higher frequency of "MinMax Scaler" implies its efficiency during hyperparameter tuning, resulting in more precise and stable predictions. 
 
